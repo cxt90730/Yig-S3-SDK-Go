@@ -16,10 +16,10 @@ func BucketACLSample() {
 	}
 
 	// Set Bucket CannedACL 'PublicRead'
-        err = sc.PutBucketAcl(bucketName,"public-read")
-        if err != nil {
-                HandleError(err)
-        }
+	err = sc.PutBucketAcl(bucketName, "public-read")
+	if err != nil {
+		HandleError(err)
+	}
 
 	out, err := sc.GetBucketAcl(bucketName)
 	if err != nil {

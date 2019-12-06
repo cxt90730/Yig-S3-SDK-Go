@@ -15,7 +15,7 @@ func (s3client *S3Client) MakeBucket(bucketName string) (err error) {
 	return
 }
 
-func (s3client *S3Client) MakeBucketAcl(bucketName string, acl string) (err error) {
+func (s3client *S3Client) MakeBucketWithAcl(bucketName string, acl string) (err error) {
 	params := &s3.CreateBucketInput{
 		Bucket: aws.String(bucketName),
 		ACL:    aws.String(acl),

@@ -6,21 +6,22 @@ import (
 	"github.com/journeymidnight/aws-sdk-go/aws"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
 )
+
 //Not implemented
 func BucketLoggingSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()
 
-        sc := s3lib.NewS3(endpoint, accessKey, secretKey)
+	sc := s3lib.NewS3(endpoint, accessKey, secretKey)
 	err := sc.MakeBucket(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
 
 	// SetBucketLogging(bucketName, logBucketName, "prefix")
-	rules:=&s3.LoggingEnabled{
-		TargetBucket:aws.String("targetbucket"),
-		TargetGrants:[]*s3.TargetGrant{
+	rules := &s3.LoggingEnabled{
+		TargetBucket: aws.String("targetbucket"),
+		TargetGrants: []*s3.TargetGrant{
 			{
 				Grantee: &s3.Grantee{
 					Type: aws.String("Group"),
@@ -29,20 +30,20 @@ func BucketLoggingSample() {
 				Permission: aws.String("READ"),
 			},
 		},
-		TargetPrefix:aws.String("MyBucketLogs/"),
+		TargetPrefix: aws.String("MyBucketLogs/"),
 	}
-	err = sc.PutBucketLogging(bucketName,rules)
+	err = sc.PutBucketLogging(bucketName, rules)
 	if err != nil {
 		HandleError(err)
 	}
 	// GetBucketLogging(bucketName)
-	a,err := sc.GetBucketLogging(bucketName)
+	a, err := sc.GetBucketLogging(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
 	fmt.Println(a)
 	// DeleteBucketLogging(bucketName)
-	err = sc.PutBucketLogging(bucketName,nil)
+	err = sc.PutBucketLogging(bucketName, nil)
 	if err != nil {
 		HandleError(err)
 	}

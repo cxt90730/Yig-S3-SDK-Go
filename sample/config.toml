@@ -1,5 +1,5 @@
 [s3]
-endpoint   = "s3.test.com"
+endpoint   = "s3.test.com:8080"
 accessKey  = "hehehehe"
 secretKey  = "hehehehe"
 bucketName = "go-sdk-test"

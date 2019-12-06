@@ -21,14 +21,14 @@ func MakeBucketSample() {
 	if err != nil {
 		HandleError(err)
 	}
-  
-        //Make bucket with ACL
-        err = sc.MakeBucketAcl(bucketName,"public-read")
+
+	//Make bucket with ACL
+	err = sc.MakeBucketWithAcl(bucketName, "public-read")
 	if err != nil {
 		HandleError(err)
 	}
 
-        out, err := sc.GetBucketAcl(bucketName)
+	out, err := sc.GetBucketAcl(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
