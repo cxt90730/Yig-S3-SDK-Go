@@ -90,7 +90,7 @@ func newRefererStatement(bucketName string, referers []string) (*policy.Statemen
 	return &s, nil
 }
 
-func (s3client *S3Client) SetReferer(bucketName string, referers []string) (err error) {
+func (s3client *S3Client) PutReferer(bucketName string, referers []string) (err error) {
 	currentPolicy, err := s3client.GetBucketPolicy(bucketName)
 	if err != nil {
 		return

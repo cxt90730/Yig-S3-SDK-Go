@@ -20,6 +20,19 @@ func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (er
 	return
 }
 
+func (s3client *S3Client) PutObjectMeta(bucketName, key string, value io.Reader, meta map[string]string) (err error) {
+	params := &s3.PutObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(key),
+		Body:   aws.ReadSeekCloser(value),
+		Metadata:  aws.StringMap(meta),
+	}
+	if _, err = s3client.Client.PutObject(params); err != nil {
+		return err
+	}
+	return
+}
+
 func (s3client *S3Client) PutObjectPreSignedWithSpecifiedBody(bucketName, key string, value io.Reader, expire time.Duration) (url string, err error) {
 	params := &s3.PutObjectInput{
 		Bucket: aws.String(bucketName),
@@ -115,6 +128,37 @@ func (s3client *S3Client) AppendObject(bucketName, key string, value io.ReadSeek
 		Bucket:   aws.String(bucketName),
 		Key:      aws.String(key),
 		Body:     value,
+		Position: aws.Int64(position),
+	}
+	if out, err = s3client.Client.AppendObject(params); err != nil {
+		return 0, err
+	}
+
+	return *out.NextPosition, nil
+}
+
+func (s3client *S3Client) AppendObjectWithAclAndMeta(bucketName, key string, value io.ReadSeeker, position int64, acl string, meta map[string]string) (nextPos int64, err error) {
+	var out *s3.AppendObjectOutput
+	params := &s3.AppendObjectInput{
+		Bucket:   aws.String(bucketName),
+		Key:      aws.String(key),
+		Body:     value,
+		Position: aws.Int64(position),
+		ACL:      aws.String(acl),
+		Metadata:  aws.StringMap(meta),
+	}
+	if out, err = s3client.Client.AppendObject(params); err != nil {
+		return 0, err
+	}
+
+	return *out.NextPosition, nil
+}
+
+func (s3client *S3Client) GetObjectNextAppendPosition(bucketName, key string, position int64) (nextPos int64, err error) {
+	var out *s3.AppendObjectOutput
+	params := &s3.AppendObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(key),
 		Position: aws.Int64(position),
 	}
 	if out, err = s3client.Client.AppendObject(params); err != nil {

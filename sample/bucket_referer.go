@@ -18,7 +18,7 @@ func BucketRefererSample() {
 		"http://www.unicloud.com",
 	}
 
-	err = sc.SetReferer(bucketName, referers)
+	err = sc.PutReferer(bucketName, referers)
 	if err != nil {
 		HandleError(err)
 	}
@@ -26,7 +26,7 @@ func BucketRefererSample() {
 	r, err := sc.GetReferer(bucketName)
 	fmt.Println(r)
 
-	err = sc.SetReferer(bucketName, []string{})
+	err = sc.PutReferer(bucketName, []string{})
 	if err != nil {
 		HandleError(err)
 	}

@@ -11,7 +11,7 @@ func main() {
 
 	//sample.MakeBucketSample()
 	//sample.ListBucketsSample()
-	//sample.BucketACLSample()
+	sample.BucketACLSample()
 	//sample.BucketLifecycleSample()
 	//sample.BucketRefererSample()
 	//sample.BucketLoggingSample()
@@ -19,7 +19,7 @@ func main() {
 	//
 	//sample.PutObjectSample()
 	//sample.GetObjectSample()
-	sample.ListObjectsSample()
+	//sample.ListObjectsSample()
 	//sample.DeleteObjectSample()
 	//sample.AppendObjectSample()
 	//sample.ObjectACLSample()
