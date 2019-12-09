@@ -122,6 +122,19 @@ func (s3client *S3Client) DeleteObjects(bucketName string, key ...string) (delet
 	return
 }
 
+func (s3client *S3Client)CopyObject(destinationBucket,copySource, key string) (err error) {
+	params := &s3.CopyObjectInput{
+		Bucket: aws.String(destinationBucket),
+		CopySource: aws.String(copySource),
+		Key:    aws.String(key),
+	}
+	_, err = s3client.Client.CopyObject(params)
+	if err != nil {
+		return err
+	}
+	return
+}
+
 func (s3client *S3Client) AppendObject(bucketName, key string, value io.ReadSeeker, position int64) (nextPos int64, err error) {
 	var out *s3.AppendObjectOutput
 	params := &s3.AppendObjectInput{
