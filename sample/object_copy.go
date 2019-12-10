@@ -11,9 +11,9 @@ func CopyObjectSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()
 
-        sc := s3lib.NewS3(endpoint, accessKey, secretKey)
+	sc := s3lib.NewS3(endpoint, accessKey, secretKey)
 	// Create a sourceBucket and descBucket
-	var descBucketName ="descbucketname"
+	var descBucketName = "descbucketname"
 	err := sc.MakeBucket(bucketName)
 	if err != nil {
 		HandleError(err)
@@ -27,29 +27,29 @@ func CopyObjectSample() {
 	// 1. Put a string object
 	err = sc.PutObject(bucketName, objectKey, strings.NewReader("NewBucketAndObjectSample"))
 	if err != nil {
-                fmt.Println("111")
+		fmt.Println("111")
 		HandleError(err)
 	}
 
 	// 2: Copy an existing object
 	var descObjectKey = "descobject"
 	//var copySource="/"+bucketName+"/"+objectKey
-        err = sc.CopyObject(descBucketName,"/go-sdk-test/go-sdk-key",descObjectKey)
+	err = sc.CopyObject(descBucketName, "/go-sdk-test/go-sdk-key", descObjectKey)
 	if err != nil {
-                fmt.Println("222")
+		fmt.Println("222")
 		HandleError(err)
 	}
 
-    // 3. Get copy bucket object
-	out,err := sc.GetObject(descBucketName,descObjectKey)
+	// 3. Get copy bucket object
+	out, err := sc.GetObject(descBucketName, descObjectKey)
 	if err != nil {
 		HandleError(err)
 	}
 	b, _ := ioutil.ReadAll(out)
 	fmt.Println("Get appended string:", string(b))
 	out.Close()
-     
-        err = sc.DeleteObject(descBucketName, descObjectKey)
+
+	err = sc.DeleteObject(descBucketName, descObjectKey)
 	if err != nil {
 		HandleError(err)
 	}

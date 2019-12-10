@@ -20,7 +20,7 @@ func ObjectMetaSample() {
 	}
 	c := make(map[string]string)
 	c["a"] = "b"
-	err = sc.PutObjectMeta(bucketName, objectKey, strings.NewReader("NewBucketAndObjectSample"), c)
+	err = sc.PutObjectWithMeta(bucketName, objectKey, strings.NewReader("NewBucketAndObjectSample"), c)
 	if err != nil {
 		HandleError(err)
 	}

@@ -5,7 +5,7 @@ import (
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 )
 
-//Not Implemented
+// WARN: Bucket Logging is not implemented now.
 func BucketRequestPaymentSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()

@@ -3,7 +3,6 @@ package s3lib
 import (
 	"github.com/journeymidnight/aws-sdk-go/aws"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
-	//"github.com/aws/aws-sdk-go/aws"
 )
 
 func (s3client *S3Client) PutBucketWebsite(bucketName string) error {

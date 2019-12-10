@@ -20,7 +20,7 @@ func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (er
 	return
 }
 
-func (s3client *S3Client) PutObjectMeta(bucketName, key string, value io.Reader, meta map[string]string) (err error) {
+func (s3client *S3Client) PutObjectWithMeta(bucketName, key string, value io.Reader, meta map[string]string) (err error) {
 	params := &s3.PutObjectInput{
 		Bucket: aws.String(bucketName),
 		Key:    aws.String(key),

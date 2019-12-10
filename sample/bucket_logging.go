@@ -7,7 +7,7 @@ import (
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
 )
 
-//Not implemented
+// WARN: Bucket Logging is not implemented now.
 func BucketLoggingSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()
