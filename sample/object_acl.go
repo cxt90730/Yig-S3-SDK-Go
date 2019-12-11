@@ -21,7 +21,7 @@ func ObjectACLSample() {
 	if err != nil {
 		HandleError(err)
 	}
-	err = sc.PutObjectAcl(bucketName, objectKey, "public-read")
+	err = sc.PutObjectAcl(bucketName, objectKey, s3lib.BucketCannedACLPublicRead)
 	if err != nil {
 		HandleError(err)
 	}
@@ -40,7 +40,7 @@ func ObjectACLSample() {
 	if err != nil {
 		HandleError(err)
 	}
-	err = sc.PutObjectAcl(bucketName, objectKey, "public-read-write")
+	err = sc.PutObjectAcl(bucketName, objectKey, s3lib.BucketCannedACLPublicReadWrite)
 	if err != nil {
 		HandleError(err)
 	}

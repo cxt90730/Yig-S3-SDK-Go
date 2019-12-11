@@ -5,7 +5,6 @@ import (
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 )
 
-
 func PutObjectEncryptSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()

@@ -45,6 +45,5 @@ func DeleteObjectSample() {
 		HandleError(err)
 	}
 
-
 	fmt.Printf("DeleteObjectSample Run Success !\n\n")
 }

@@ -1,8 +1,8 @@
 package s3lib
 
 import (
-	"github.com/journeymidnight/aws-sdk-go/service/s3"
 	"github.com/journeymidnight/aws-sdk-go/aws"
+	"github.com/journeymidnight/aws-sdk-go/service/s3"
 )
 
 func (s3client *S3Client) SetBucketCORS(bucketName string, rules []*s3.CORSRule) error {
@@ -41,4 +41,3 @@ func (s3client *S3Client) DeleteBucketCORS(bucketName string) error {
 	}
 	return nil
 }
-

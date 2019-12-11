@@ -23,7 +23,7 @@ func MakeBucketSample() {
 	}
 
 	//Make bucket with ACL
-	err = sc.MakeBucketWithAcl(bucketName, BucketCannedACLPublicRead)
+	err = sc.MakeBucketWithAcl(bucketName, s3lib.BucketCannedACLPublicRead)
 	if err != nil {
 		HandleError(err)
 	}

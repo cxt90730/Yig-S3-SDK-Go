@@ -19,13 +19,13 @@ func (s3client *S3Client) PutBucketRequestPayment(bucketName string) error {
 	return nil
 }
 
-func (s3client *S3Client) GetBucketRequestPayment(bucketName string) (result *s3.GetBucketRequestPaymentOutput,err error) {
+func (s3client *S3Client) GetBucketRequestPayment(bucketName string) (result *s3.GetBucketRequestPaymentOutput, err error) {
 	params := &s3.GetBucketRequestPaymentInput{
 		Bucket: aws.String(bucketName),
 	}
 	result, err = s3client.Client.GetBucketRequestPayment(params)
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-	return result,nil
+	return result, nil
 }

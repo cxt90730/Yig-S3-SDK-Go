@@ -2,9 +2,9 @@ package sample
 
 import (
 	"fmt"
-	"os"
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 	"io"
+	"os"
 )
 
 func GetObjectSample() {

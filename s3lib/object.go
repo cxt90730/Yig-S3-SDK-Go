@@ -1,11 +1,11 @@
 package s3lib
 
 import (
+	"fmt"
 	"github.com/journeymidnight/aws-sdk-go/aws"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
 	"io"
 	"time"
-	"fmt"
 )
 
 func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (err error) {
@@ -22,10 +22,10 @@ func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (er
 
 func (s3client *S3Client) PutObjectWithMeta(bucketName, key string, value io.Reader, meta map[string]string) (err error) {
 	params := &s3.PutObjectInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(key),
-		Body:   aws.ReadSeekCloser(value),
-		Metadata:  aws.StringMap(meta),
+		Bucket:   aws.String(bucketName),
+		Key:      aws.String(key),
+		Body:     aws.ReadSeekCloser(value),
+		Metadata: aws.StringMap(meta),
 	}
 	if _, err = s3client.Client.PutObject(params); err != nil {
 		return err
@@ -122,11 +122,11 @@ func (s3client *S3Client) DeleteObjects(bucketName string, key ...string) (delet
 	return
 }
 
-func (s3client *S3Client)CopyObject(destinationBucket,copySource, key string) (err error) {
+func (s3client *S3Client) CopyObject(destinationBucket, copySource, key string) (err error) {
 	params := &s3.CopyObjectInput{
-		Bucket: aws.String(destinationBucket),
+		Bucket:     aws.String(destinationBucket),
 		CopySource: aws.String(copySource),
-		Key:    aws.String(key),
+		Key:        aws.String(key),
 	}
 	_, err = s3client.Client.CopyObject(params)
 	if err != nil {
@@ -158,7 +158,7 @@ func (s3client *S3Client) AppendObjectWithAclAndMeta(bucketName, key string, val
 		Body:     value,
 		Position: aws.Int64(position),
 		ACL:      aws.String(acl),
-		Metadata:  aws.StringMap(meta),
+		Metadata: aws.StringMap(meta),
 	}
 	if out, err = s3client.Client.AppendObject(params); err != nil {
 		return 0, err
@@ -170,8 +170,8 @@ func (s3client *S3Client) AppendObjectWithAclAndMeta(bucketName, key string, val
 func (s3client *S3Client) GetObjectNextAppendPosition(bucketName, key string, position int64) (nextPos int64, err error) {
 	var out *s3.AppendObjectOutput
 	params := &s3.AppendObjectInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(key),
+		Bucket:   aws.String(bucketName),
+		Key:      aws.String(key),
 		Position: aws.Int64(position),
 	}
 	if out, err = s3client.Client.AppendObject(params); err != nil {
@@ -181,13 +181,13 @@ func (s3client *S3Client) GetObjectNextAppendPosition(bucketName, key string, po
 	return *out.NextPosition, nil
 }
 
-func (s3client *S3Client) ListObjects(bucketName string, prefix string, delimiter string, maxKey int64)(
+func (s3client *S3Client) ListObjects(bucketName string, prefix string, delimiter string, maxKey int64) (
 	keys []string, isTruncated bool, nextMarker string, err error) {
 	params := &s3.ListObjectsInput{
-		Bucket: aws.String(bucketName),
-		MaxKeys: aws.Int64(maxKey),
+		Bucket:    aws.String(bucketName),
+		MaxKeys:   aws.Int64(maxKey),
 		Delimiter: aws.String(delimiter),
-		Prefix: aws.String(prefix),
+		Prefix:    aws.String(prefix),
 	}
 	out, err := s3client.Client.ListObjects(params)
 	if err != nil {

@@ -23,7 +23,6 @@ func ListObjectsSample() {
 	}
 	DeleteTestBucketAndObject()
 
-
 	// Create a bucket
 	err := sc.MakeBucket(bucketName)
 	if err != nil {
@@ -53,7 +52,7 @@ func ListObjectsSample() {
 }
 
 func printSlice(ss []string) {
-	for _, s := range ss{
+	for _, s := range ss {
 		fmt.Println(s)
 	}
 }
