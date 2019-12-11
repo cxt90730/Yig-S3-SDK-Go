@@ -18,36 +18,30 @@ func PreSignedSample() {
 		HandleError(err)
 	}
 
-	// 1. Put object pre signed with specified body
+	// 1. Put object pre signed url with specified body
 	url, err := sc.PutObjectPreSignedWithSpecifiedBody(bucketName, objectKey, strings.NewReader("NewBucketAndObjectSample"), (5 * time.Minute))
 	if err != nil {
 		HandleError(err)
 	}
 	fmt.Println("put object pre signed with specified body url is :", url)
-	// 2. Get object pre signed with specified body
+	// 2. Get object pre signed url
 	url, err = sc.GetObjectPreSigned(bucketName, objectKey, (5 * time.Minute))
 	if err != nil {
 		HandleError(err)
 	}
-	fmt.Println("get object pre signed  with specified body url is :", url)
+	fmt.Println("get object pre signed url is :", url)
 
 	err = sc.DeleteObject(bucketName, objectKey)
 	if err != nil {
 		HandleError(err)
 	}
 
-	//3. Put object pre signed without specified body
+	//3. Put object pre signed url without specified body
 	url, err = sc.PutObjectPreSignedWithoutSpecifiedBody(bucketName, objectKey, (5 * time.Minute))
 	if err != nil {
 		HandleError(err)
 	}
 	fmt.Println("put object pre signed without specified body url is :", url)
-	// 2. Get object pre signed without specified body
-	url, err = sc.GetObjectPreSigned(bucketName, objectKey, (5 * time.Minute))
-	if err != nil {
-		HandleError(err)
-	}
-	fmt.Println("get object pre signed  without specified body url is :", url)
 
 	fmt.Printf("PreSignedSample Run Success!\n\n")
 }
