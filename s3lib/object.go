@@ -52,6 +52,54 @@ func (s3client *S3Client) PutObjectPreSignedWithoutSpecifiedBody(bucketName, key
 	return req.Presign(expire)
 }
 
+func (s3client *S3Client) CreateMultipartUpload(bucketName, key string) (uploadId *string, err error) {
+	params := &s3.CreateMultipartUploadInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(key),
+	}
+	result, err := s3client.Client.CreateMultipartUpload(params)
+	if err != nil {
+		return nil, err
+	}
+	return result.UploadId, err
+}
+
+func (s3client *S3Client) UploadPart(bucketName, key string, uploadId *string, value io.Reader) (etag *string, err error) {
+	params := &s3.UploadPartInput{
+		Bucket:     aws.String(bucketName),
+		Key:        aws.String(key),
+		Body:       aws.ReadSeekCloser(value),
+		PartNumber: aws.Int64(1),
+		UploadId:   uploadId,
+	}
+	result, err := s3client.Client.UploadPart(params)
+	if err != nil {
+		return nil, err
+	}
+	return result.ETag, err
+}
+
+func (s3client *S3Client) CompleteMultipartUpload(bucketName, key string, etag, uploadId *string) (err error) {
+	params := &s3.CompleteMultipartUploadInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(key),
+		MultipartUpload: &s3.CompletedMultipartUpload{
+			Parts: []*s3.CompletedPart{
+				{
+					ETag:       etag,
+					PartNumber: aws.Int64(1),
+				},
+			},
+		},
+		UploadId: uploadId,
+	}
+	_, err = s3client.Client.CompleteMultipartUpload(params)
+	if err != nil {
+		return err
+	}
+	return
+}
+
 func (s3client *S3Client) HeadObject(bucketName, key string) (err error) {
 	params := &s3.HeadObjectInput{
 		Bucket: aws.String(bucketName),

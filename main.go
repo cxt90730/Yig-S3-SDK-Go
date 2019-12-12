@@ -26,7 +26,7 @@ func main() {
 	//sample.ObjectACLSample()
 	//sample.ObjectMetaSample()
         //sample.PutObjectEncryptSample()
-        
+        sample.MultipartUploadSample()
         //sample.PreSignedSample()
 	//sample.CopyObjectSample()
         //sample.BucketWebsiteSample()   
