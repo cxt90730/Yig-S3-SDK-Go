@@ -1,6 +1,7 @@
 package s3lib
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/journeymidnight/aws-sdk-go/aws"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
@@ -52,10 +53,11 @@ func (s3client *S3Client) PutObjectPreSignedWithoutSpecifiedBody(bucketName, key
 	return req.Presign(expire)
 }
 
-func (s3client *S3Client) CreateMultipartUpload(bucketName, key string) (uploadId *string, err error) {
+func (s3client *S3Client) CreateMultiPartUpload(bucketName, key, storageClass string) (uploadId *string, err error) {
 	params := &s3.CreateMultipartUploadInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(key),
+		Bucket:       aws.String(bucketName),
+		Key:          aws.String(key),
+		StorageClass: aws.String(storageClass),
 	}
 	result, err := s3client.Client.CreateMultipartUpload(params)
 	if err != nil {
@@ -64,34 +66,53 @@ func (s3client *S3Client) CreateMultipartUpload(bucketName, key string) (uploadI
 	return result.UploadId, err
 }
 
-func (s3client *S3Client) UploadPart(bucketName, key string, uploadId *string, value io.Reader) (etag *string, err error) {
+func (s3client *S3Client) UploadPart(bucketName, key string, partNum int64, uploadId *string, value []byte) (etag string, err error) {
 	params := &s3.UploadPartInput{
 		Bucket:     aws.String(bucketName),
 		Key:        aws.String(key),
-		Body:       aws.ReadSeekCloser(value),
-		PartNumber: aws.Int64(1),
+		Body:       bytes.NewReader(value),
+		PartNumber: aws.Int64(partNum),
 		UploadId:   uploadId,
 	}
 	result, err := s3client.Client.UploadPart(params)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return result.ETag, err
+	return *result.ETag, err
 }
 
-func (s3client *S3Client) CompleteMultipartUpload(bucketName, key string, etag, uploadId *string) (err error) {
-	params := &s3.CompleteMultipartUploadInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(key),
-		MultipartUpload: &s3.CompletedMultipartUpload{
-			Parts: []*s3.CompletedPart{
-				{
-					ETag:       etag,
-					PartNumber: aws.Int64(1),
-				},
-			},
-		},
+func (s3client *S3Client) ListMultiPartUpload(bucketName, key string, uploadId *string) (result []*s3.Part, err error) {
+	params := &s3.ListPartsInput{
+		Bucket:   aws.String(bucketName),
+		Key:      aws.String(key),
 		UploadId: uploadId,
+	}
+	out, err := s3client.Client.ListParts(params)
+	if err != nil {
+		return nil, err
+	}
+	return out.Parts, err
+}
+
+func (s3client *S3Client) AbortMultiPartUpload(bucketName, key string, uploadId *string) (err error) {
+	params := &s3.AbortMultipartUploadInput{
+		Bucket:   aws.String(bucketName),
+		Key:      aws.String(key),
+		UploadId: uploadId,
+	}
+	_, err = s3client.Client.AbortMultipartUpload(params)
+	if err != nil {
+		return err
+	}
+	return err
+}
+
+func (s3client *S3Client) CompleteMultiPartUpload(bucketName, key string, completed *s3.CompletedMultipartUpload, uploadId *string) (err error) {
+	params := &s3.CompleteMultipartUploadInput{
+		Bucket:          aws.String(bucketName),
+		Key:             aws.String(key),
+		MultipartUpload: completed,
+		UploadId:        uploadId,
 	}
 	_, err = s3client.Client.CompleteMultipartUpload(params)
 	if err != nil {
@@ -122,6 +143,19 @@ func (s3client *S3Client) GetObject(bucketName, key string) (value io.ReadCloser
 		return nil, err
 	}
 	return out.Body, err
+}
+
+func (s3client *S3Client) GetObjectWithRange(bucketName, key, Range string) (value string, err error) {
+	params := &s3.GetObjectInput{
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(key),
+		Range:  aws.String(Range),
+	}
+	out, err := s3client.Client.GetObject(params)
+	if err != nil {
+		return
+	}
+	return *out.ContentRange, err
 }
 
 func (s3client *S3Client) GetObjectPreSigned(bucketName, key string, expire time.Duration) (url string, err error) {
