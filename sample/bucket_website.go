@@ -27,5 +27,11 @@ func BucketWebsiteSample() {
 		HandleError(err)
 	}
 
+	//Delete Bucket Website
+	err = sc.DeleteBucketWebsite(bucketName)
+	if err != nil {
+		HandleError(err)
+	}
+
 	fmt.Printf("BucketWebsiteSample Run Success !\n\n")
 }
