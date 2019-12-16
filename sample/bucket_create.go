@@ -16,13 +16,27 @@ func MakeBucketSample() {
 		HandleError(err)
 	}
 
-	// TODO: Make bucket with ACL
-
 	// Delete a bucket
 	err = sc.DeleteBucket(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
 
+	//Make bucket with ACL
+	err = sc.MakeBucketWithAcl(bucketName, s3lib.BucketCannedACLPublicRead)
+	if err != nil {
+		HandleError(err)
+	}
+
+	out, err := sc.GetBucketAcl(bucketName)
+	if err != nil {
+		HandleError(err)
+	}
+	fmt.Println("Get Bucket ACL:", out)
+
+	err = sc.DeleteBucket(bucketName)
+	if err != nil {
+		HandleError(err)
+	}
 	fmt.Printf("CreateBucketSample Run Success!\n\n")
 }

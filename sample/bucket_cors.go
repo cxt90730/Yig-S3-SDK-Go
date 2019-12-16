@@ -2,9 +2,9 @@ package sample
 
 import (
 	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/aws"
 )
 
 func BucketCORSSample() {

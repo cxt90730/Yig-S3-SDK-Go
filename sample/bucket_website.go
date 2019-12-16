@@ -5,7 +5,7 @@ import (
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 )
 
-func BucketACLSample() {
+func BucketWebsiteSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()
 
@@ -15,17 +15,23 @@ func BucketACLSample() {
 		HandleError(err)
 	}
 
-	// Set Bucket CannedACL 'PublicRead'
-	err = sc.PutBucketAcl(bucketName, s3lib.BucketCannedACLPublicRead)
+	//put bucket website
+	err = sc.PutBucketWebsite(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
 
-	out, err := sc.GetBucketAcl(bucketName)
+	//Get Bucket Website
+	err = sc.GetBucketWebsite(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
-	fmt.Println("Get Bucket ACL:", out)
 
-	fmt.Printf("BucketACLSample Run Success!\n\n")
+	//Delete Bucket Website
+	err = sc.DeleteBucketWebsite(bucketName)
+	if err != nil {
+		HandleError(err)
+	}
+
+	fmt.Printf("BucketWebsiteSample Run Success !\n\n")
 }

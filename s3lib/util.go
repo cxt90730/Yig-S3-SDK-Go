@@ -24,7 +24,7 @@ func TransferToS3AccessControlPolicy(policy *datatype.AccessControlPolicy) (s3po
 		grant.Grantee.DisplayName = aws.String(p.Grantee.DisplayName)
 		grant.Grantee.URI = aws.String(p.Grantee.URI)
 		grant.Grantee.Type = aws.String(p.Grantee.XsiType)
-	//	grant.Grantee.EmailAddress = aws.String(p.Grantee.EmailAddress)
+		//	grant.Grantee.EmailAddress = aws.String(p.Grantee.EmailAddress)
 		grant.Permission = aws.String(p.Permission)
 		s3policy.Grants = append(s3policy.Grants, grant)
 	}

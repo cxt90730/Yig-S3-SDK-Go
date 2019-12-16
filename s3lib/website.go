@@ -1,21 +1,46 @@
 package s3lib
 
 import (
+	"github.com/journeymidnight/aws-sdk-go/aws"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
-	//"github.com/aws/aws-sdk-go/aws"
 )
 
-func (s3client *S3Client) SetBucketWebsite(bucketName string, rules []*s3.CORSRule) error {
-	//param := s3.PutBucketWebsiteInput{
-	//	Bucket: aws.String(bucketName),
-	//	WebsiteConfiguration: &s3.WebsiteConfiguration{
-	//		IndexDocument: &s3.IndexDocument{
-	//			Suffix: aws.String("index.html"),
-	//		},
-	//		ErrorDocument: &s3.ErrorDocument{
-	//			Key: aws.String("error.html"),
-	//		},
-	//	},
-	//}
+func (s3client *S3Client) PutBucketWebsite(bucketName string) error {
+	params := &s3.PutBucketWebsiteInput{
+		Bucket: aws.String(bucketName),
+		WebsiteConfiguration: &s3.WebsiteConfiguration{
+			IndexDocument: &s3.IndexDocument{
+				Suffix: aws.String("index.html"),
+			},
+			ErrorDocument: &s3.ErrorDocument{
+				Key: aws.String("error.html"),
+			},
+		},
+	}
+	_, err := s3client.Client.PutBucketWebsite(params)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s3client *S3Client) GetBucketWebsite(bucketName string) error {
+	params := &s3.GetBucketWebsiteInput{
+		Bucket: aws.String(bucketName),
+	}
+	_, err := s3client.Client.GetBucketWebsite(params)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func (s3client *S3Client) DeleteBucketWebsite(bucketName string) error {
+	params := &s3.DeleteBucketWebsiteInput{
+		Bucket: aws.String(bucketName),
+	}
+	_, err := s3client.Client.DeleteBucketWebsite(params)
+	if err != nil {
+		return err
+	}
 	return nil
 }

@@ -5,7 +5,8 @@ import (
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 )
 
-func BucketACLSample() {
+// WARN: Bucket Logging is not implemented now.
+func BucketRequestPaymentSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()
 
@@ -15,17 +16,18 @@ func BucketACLSample() {
 		HandleError(err)
 	}
 
-	// Set Bucket CannedACL 'PublicRead'
-	err = sc.PutBucketAcl(bucketName, s3lib.BucketCannedACLPublicRead)
+	//put bucket website
+	err = sc.PutBucketRequestPayment(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
 
-	out, err := sc.GetBucketAcl(bucketName)
+	//Get Bucket Website
+	result, err := sc.GetBucketRequestPayment(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
-	fmt.Println("Get Bucket ACL:", out)
+	fmt.Println("Request Payment is: ", result)
 
-	fmt.Printf("BucketACLSample Run Success!\n\n")
+	fmt.Printf("BucketRequestPaymentSample Run Success !\n\n")
 }

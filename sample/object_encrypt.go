@@ -5,27 +5,27 @@ import (
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 )
 
-func BucketACLSample() {
+func PutObjectEncryptSample() {
 	DeleteTestBucketAndObject()
 	defer DeleteTestBucketAndObject()
-
 	sc := s3lib.NewS3(endpoint, accessKey, secretKey)
+	// Create a bucket
 	err := sc.MakeBucket(bucketName)
 	if err != nil {
 		HandleError(err)
 	}
 
-	// Set Bucket CannedACL 'PublicRead'
-	err = sc.PutBucketAcl(bucketName, s3lib.BucketCannedACLPublicRead)
+	// 1. Put Encrypt Object With SSEC
+	err = sc.PutEncryptObjectWithSSEC(bucketName, objectKey, "NewBucketAndObjectSample")
 	if err != nil {
 		HandleError(err)
 	}
 
-	out, err := sc.GetBucketAcl(bucketName)
+	result, err := sc.GetEncryptObjectWithSSEC(bucketName, objectKey)
 	if err != nil {
 		HandleError(err)
 	}
-	fmt.Println("Get Bucket ACL:", out)
+	fmt.Println("Get Encrypt Object With SSEC: ", result)
 
-	fmt.Printf("BucketACLSample Run Success!\n\n")
+	fmt.Printf("PutObjectEncryptSample Run Success !\n\n")
 }

@@ -16,18 +16,21 @@ func main() {
 	//sample.BucketRefererSample()
 	//sample.BucketLoggingSample()
 	//sample.BucketCORSSample()
+	//sample.BucketRequestPaymentSample()
 	//
 	//sample.PutObjectSample()
 	//sample.GetObjectSample()
-	sample.ListObjectsSample()
+	//sample.ListObjectsSample()
 	//sample.DeleteObjectSample()
 	//sample.AppendObjectSample()
 	//sample.ObjectACLSample()
 	//sample.ObjectMetaSample()
-
-
+	//sample.PutObjectEncryptSample()
+	//sample.MultiPartUploadSample()
+	//sample.MultiPartDownloadSample()
+	//sample.PreSignedSample()
 	//sample.CopyObjectSample()
-
+	//sample.BucketWebsiteSample()
 	//sample.ArchiveSample()
 	//sample.MySample()
 
