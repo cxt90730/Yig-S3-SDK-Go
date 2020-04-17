@@ -7,7 +7,7 @@ import (
 
 func BucketACLSample() {
 	DeleteTestBucketAndObject()
-	defer DeleteTestBucketAndObject()
+	defer DeleteTestBucket()
 
 	sc := s3lib.NewS3(endpoint, accessKey, secretKey)
 	err := sc.MakeBucket(bucketName)

@@ -16,14 +16,17 @@ func main() {
 	//sample.BucketRefererSample()
 	//sample.BucketLoggingSample()
 	//sample.BucketCORSSample()
+	//sample.BucketEncryptionSample()
 	//
 	//sample.PutObjectSample()
 	//sample.GetObjectSample()
-	sample.ListObjectsSample()
+	//sample.ListObjectsSample()
 	//sample.DeleteObjectSample()
 	//sample.AppendObjectSample()
 	//sample.ObjectACLSample()
 	//sample.ObjectMetaSample()
+	//sample.PutEncryptObjectWithSSECSample()
+	sample.PutEncryptObjectWithSSES3Sample()
 
 
 	//sample.CopyObjectSample()
