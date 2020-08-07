@@ -93,19 +93,19 @@ func BucketLifecycleSample() {
 				Status: aws.String("Enabled"),
 			},
 			// NoncurrentVersionTransitions,storageClass turn into STANDARD_IA,but it's not work
-			{
-				Filter: &s3.LifecycleRuleFilter{
-					Prefix: aws.String("test/"),
-				},
-				ID:     aws.String("id5"),
-				Status: aws.String("Disable"),
-				NoncurrentVersionTransitions: []*s3.NoncurrentVersionTransition{
-					{
-						NoncurrentDays: aws.Int64(30),
-						StorageClass:   aws.String("STANDARD_IA"),
-					},
-				},
-			},
+			//{
+			//	Filter: &s3.LifecycleRuleFilter{
+			//		Prefix: aws.String("test/"),
+			//	},
+			//	ID:     aws.String("id5"),
+			//	Status: aws.String("Disable"),
+			//	NoncurrentVersionTransitions: []*s3.NoncurrentVersionTransition{
+			//		{
+			//			NoncurrentDays: aws.Int64(30),
+			//			StorageClass:   aws.String("STANDARD_IA"),
+			//		},
+			//	},
+			//},
 		},
 	}
 

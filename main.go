@@ -16,8 +16,9 @@ func main() {
 	//sample.BucketRefererSample()
 	//sample.BucketLoggingSample()
 	//sample.BucketCORSSample()
+	//sample.BucketRequestPaymentSample()
 	//sample.BucketEncryptionSample()
-	//
+
 	//sample.PutObjectSample()
 	//sample.PutObjectWithForbidOverwrite()
 	//sample.GetObjectSample()
@@ -28,12 +29,14 @@ func main() {
 	//sample.ObjectMetaSample()
 	//sample.PutEncryptObjectWithSSECSample()
 	//sample.PutEncryptObjectWithSSES3Sample()
-	sample.MultiPartUploadSample()
-	sample.MultiPartUploadSampleWithForbidOverwrite()
+	//sample.MultiPartUploadSample()
+	//sample.MultiPartUploadSampleWithForbidOverwrite()
 
-
+	//sample.MultiPartDownloadSample()
+	//sample.PreSignedSample()
 	//sample.CopyObjectSample()
 	//sample.CopyObjectWithForbidOverwriteSample()
+	//sample.BucketWebsiteSample()
 	//sample.ArchiveSample()
 	//sample.MySample()
 

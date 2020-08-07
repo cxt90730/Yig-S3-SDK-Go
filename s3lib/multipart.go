@@ -48,6 +48,19 @@ func (s3client *S3Client) UploadPart(bucketName, key string, value []byte, uploa
 	return *out.ETag, nil
 }
 
+func (s3client *S3Client) ListMultiPartUpload(bucketName, key string, uploadId *string) (result []*s3.Part, err error) {
+	params := &s3.ListPartsInput{
+		Bucket:   aws.String(bucketName),
+		Key:      aws.String(key),
+		UploadId: uploadId,
+	}
+	out, err := s3client.Client.ListParts(params)
+	if err != nil {
+		return nil, err
+	}
+	return out.Parts, err
+}
+
 func (s3client *S3Client) CompleteMultiPartUpload(bucketName, key, uploadId string, completed *s3.CompletedMultipartUpload) (err error) {
 	params := &s3.CompleteMultipartUploadInput{
 		Bucket:          aws.String(bucketName),

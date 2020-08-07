@@ -15,7 +15,11 @@ func BucketACLSample() {
 		HandleError(err)
 	}
 
-	// TODO : Surport Set Bucket CannedACL 'PublicRead'
+	// Set Bucket CannedACL 'PublicRead'
+	err = sc.PutBucketAcl(bucketName, s3lib.BucketCannedACLPublicRead)
+	if err != nil {
+		HandleError(err)
+	}
 
 	out, err := sc.GetBucketAcl(bucketName)
 	if err != nil {
