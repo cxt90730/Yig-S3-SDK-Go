@@ -19,6 +19,7 @@ func main() {
 	//sample.BucketEncryptionSample()
 	//
 	//sample.PutObjectSample()
+	//sample.PutObjectWithForbidOverwrite()
 	//sample.GetObjectSample()
 	//sample.ListObjectsSample()
 	//sample.DeleteObjectSample()
@@ -26,11 +27,13 @@ func main() {
 	//sample.ObjectACLSample()
 	//sample.ObjectMetaSample()
 	//sample.PutEncryptObjectWithSSECSample()
-	sample.PutEncryptObjectWithSSES3Sample()
+	//sample.PutEncryptObjectWithSSES3Sample()
+	sample.MultiPartUploadSample()
+	sample.MultiPartUploadSampleWithForbidOverwrite()
 
 
 	//sample.CopyObjectSample()
-
+	//sample.CopyObjectWithForbidOverwriteSample()
 	//sample.ArchiveSample()
 	//sample.MySample()
 

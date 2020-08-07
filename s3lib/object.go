@@ -1,11 +1,11 @@
 package s3lib
 
 import (
+	"fmt"
 	"github.com/journeymidnight/aws-sdk-go/aws"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
 	"io"
 	"time"
-	"fmt"
 )
 
 func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (err error) {
@@ -18,6 +18,16 @@ func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (er
 		return err
 	}
 	return
+}
+
+func (s3client *S3Client) PutObjectWithForbidOverwrite(bucketName, key string, value io.Reader, forbidOverwrite bool) (out *s3.PutObjectOutput, err error) {
+	params := &s3.PutObjectInput{
+		Bucket:          aws.String(bucketName),
+		Key:             aws.String(key),
+		Body:            aws.ReadSeekCloser(value),
+		ForbidOverwrite: aws.Bool(forbidOverwrite),
+	}
+	return s3client.Client.PutObject(params)
 }
 
 func (s3client *S3Client) PutObjectPreSignedWithSpecifiedBody(bucketName, key string, value io.Reader, expire time.Duration) (url string, err error) {
@@ -109,6 +119,28 @@ func (s3client *S3Client) DeleteObjects(bucketName string, key ...string) (delet
 	return
 }
 
+func (s3client *S3Client) CopyObject(bucketName, sourceObject, newName string) (err error) {
+	params := &s3.CopyObjectInput{
+		Bucket:     aws.String(bucketName),
+		CopySource: aws.String(sourceObject),
+		Key:        aws.String(newName),
+	}
+	if _, err = s3client.Client.CopyObject(params); err != nil {
+		return err
+	}
+	return
+}
+
+func (s3client *S3Client) CopyObjectWithForbidOverwrite(bucketName, sourceObject, newName string, forbidOverwrite bool) (out *s3.CopyObjectOutput,err error) {
+	params := &s3.CopyObjectInput{
+		Bucket:          aws.String(bucketName),
+		CopySource:      aws.String(sourceObject),
+		Key:             aws.String(newName),
+		ForbidOverwrite: aws.Bool(forbidOverwrite),
+	}
+	return s3client.Client.CopyObject(params)
+}
+
 func (s3client *S3Client) AppendObject(bucketName, key string, value io.ReadSeeker, position int64) (nextPos int64, err error) {
 	var out *s3.AppendObjectOutput
 	params := &s3.AppendObjectInput{
@@ -124,13 +156,13 @@ func (s3client *S3Client) AppendObject(bucketName, key string, value io.ReadSeek
 	return *out.NextPosition, nil
 }
 
-func (s3client *S3Client) ListObjects(bucketName string, prefix string, delimiter string, maxKey int64)(
+func (s3client *S3Client) ListObjects(bucketName string, prefix string, delimiter string, maxKey int64) (
 	keys []string, isTruncated bool, nextMarker string, err error) {
 	params := &s3.ListObjectsInput{
-		Bucket: aws.String(bucketName),
-		MaxKeys: aws.Int64(maxKey),
+		Bucket:    aws.String(bucketName),
+		MaxKeys:   aws.Int64(maxKey),
 		Delimiter: aws.String(delimiter),
-		Prefix: aws.String(prefix),
+		Prefix:    aws.String(prefix),
 	}
 	out, err := s3client.Client.ListObjects(params)
 	if err != nil {
