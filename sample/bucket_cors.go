@@ -2,9 +2,9 @@ package sample
 
 import (
 	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/journeymidnight/Yig-S3-SDK-Go/s3lib"
 	"github.com/journeymidnight/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/aws"
 )
 
 func BucketCORSSample() {
@@ -60,10 +60,7 @@ func BucketCORSSample() {
 	}
 
 	out, err = sc.GetBucketCORS(bucketName)
-	if err != nil {
-		HandleError(err)
-	}
-	fmt.Println(out)
+	fmt.Println(out, err)
 
 	fmt.Printf("BucketCORSSample Run Success !\n\n")
 }

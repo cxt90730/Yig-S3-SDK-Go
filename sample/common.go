@@ -28,3 +28,13 @@ func DeleteTestBucketAndObject() error {
 	}
 	return nil
 }
+
+func DeleteTestBucket() error {
+	sc := s3lib.NewS3(endpoint, accessKey, secretKey)
+
+	err := sc.DeleteBucket(bucketName)
+	if err != nil {
+		return err
+	}
+	return nil
+}
