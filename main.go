@@ -22,6 +22,8 @@ func main() {
 	//sample.PutObjectSample()
 	//sample.PutObjectWithForbidOverwrite()
 	//sample.GetObjectSample()
+	sample.GetObjectByRange()
+	sample.GetObjectByRange2()
 	//sample.ListObjectsSample()
 	//sample.DeleteObjectSample()
 	//sample.AppendObjectSample()

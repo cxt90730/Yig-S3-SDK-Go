@@ -154,7 +154,7 @@ func MultiPartDownloadSample() {
 		if err != nil {
 			HandleError(err)
 		}
-		fmt.Println("Download range is :", out)
+		fmt.Println("Download range is :", *out.ContentRange)
 
 	}
 	fmt.Printf("MultiPartDownloadSample Run Success !\n\n")

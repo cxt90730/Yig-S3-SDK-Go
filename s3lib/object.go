@@ -2,10 +2,11 @@ package s3lib
 
 import (
 	"fmt"
-	"github.com/journeymidnight/aws-sdk-go/aws"
-	"github.com/journeymidnight/aws-sdk-go/service/s3"
 	"io"
 	"time"
+
+	"github.com/journeymidnight/aws-sdk-go/aws"
+	"github.com/journeymidnight/aws-sdk-go/service/s3"
 )
 
 func (s3client *S3Client) PutObject(bucketName, key string, value io.Reader) (err error) {
@@ -62,14 +63,14 @@ func (s3client *S3Client) PutObjectPreSignedWithoutSpecifiedBody(bucketName, key
 	return req.Presign(expire)
 }
 
-func (s3client *S3Client) HeadObject(bucketName, key string) (err error) {
+func (s3client *S3Client) HeadObject(bucketName, key string) (out *s3.HeadObjectOutput, err error) {
 	params := &s3.HeadObjectInput{
 		Bucket: aws.String(bucketName),
 		Key:    aws.String(key),
 	}
-	_, err = s3client.Client.HeadObject(params)
+	out, err = s3client.Client.HeadObject(params)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	return
 }
@@ -86,17 +87,17 @@ func (s3client *S3Client) GetObject(bucketName, key string) (value io.ReadCloser
 	return out.Body, err
 }
 
-func (s3client *S3Client) GetObjectWithRange(bucketName, key, Range string) (value string, err error) {
+func (s3client *S3Client) GetObjectWithRange(bucketName, key, Range string) (out *s3.GetObjectOutput, err error) {
 	params := &s3.GetObjectInput{
 		Bucket: aws.String(bucketName),
 		Key:    aws.String(key),
 		Range:  aws.String(Range),
 	}
-	out, err := s3client.Client.GetObject(params)
+	out, err = s3client.Client.GetObject(params)
 	if err != nil {
 		return
 	}
-	return *out.ContentRange, err
+	return
 }
 
 func (s3client *S3Client) GetObjectPreSigned(bucketName, key string, expire time.Duration) (url string, err error) {
@@ -157,7 +158,7 @@ func (s3client *S3Client) CopyObject(bucketName, sourceObject, newName string) (
 	return
 }
 
-func (s3client *S3Client) CopyObjectWithForbidOverwrite(bucketName, sourceObject, newName string, forbidOverwrite bool) (out *s3.CopyObjectOutput,err error) {
+func (s3client *S3Client) CopyObjectWithForbidOverwrite(bucketName, sourceObject, newName string, forbidOverwrite bool) (out *s3.CopyObjectOutput, err error) {
 	params := &s3.CopyObjectInput{
 		Bucket:          aws.String(bucketName),
 		CopySource:      aws.String(sourceObject),
