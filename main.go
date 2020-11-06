@@ -19,17 +19,18 @@ func main() {
 	//
 	//sample.PutObjectSample()
 	//sample.GetObjectSample()
-	sample.ListObjectsSample()
+	//sample.ListObjectsSample()
 	//sample.DeleteObjectSample()
 	//sample.AppendObjectSample()
 	//sample.ObjectACLSample()
 	//sample.ObjectMetaSample()
-
+	//sample.PostObjectSample()
 
 	//sample.CopyObjectSample()
 
 	//sample.ArchiveSample()
-	//sample.MySample()
+	//sample.ClientEncrypt()
+	sample.MySample()
 
 	fmt.Println("All samples completed !")
 }

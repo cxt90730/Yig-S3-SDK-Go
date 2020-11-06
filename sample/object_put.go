@@ -8,17 +8,17 @@ import (
 )
 
 func PutObjectSample() {
-	DeleteTestBucketAndObject()
-	defer DeleteTestBucketAndObject()
+	//DeleteTestBucketAndObject()
+	//defer DeleteTestBucketAndObject()
 	sc := s3lib.NewS3(endpoint, accessKey, secretKey)
 	// Create a bucket
-	err := sc.MakeBucket(bucketName)
-	if err != nil {
-		HandleError(err)
-	}
+	//err := sc.MakeBucket(bucketName)
+	//if err != nil {
+	//	HandleError(err)
+	//}
 
 	// 1. Put a string object
-	err = sc.PutObject(bucketName, objectKey, strings.NewReader("NewBucketAndObjectSample"))
+	err := sc.PutObject(bucketName, objectKey, strings.NewReader("NewBucketAndObjectSample"))
 	if err != nil {
 		HandleError(err)
 	}

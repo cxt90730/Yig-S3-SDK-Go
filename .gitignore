@@ -1,4 +1,5 @@
 .idea/
 config_online.toml
+config_aws.toml
 main
 Yig-S3-SDK-Go
